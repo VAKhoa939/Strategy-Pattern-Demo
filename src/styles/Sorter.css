@@ -1,0 +1,38 @@
+.sort-menu {
+  position: fixed;
+  top: 120px;
+  left: 20px;
+  width: 160px;
+}
+
+.sort-by,
+.toggle {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.sort-menu input {
+  display: inline;
+  margin-right: 10px;
+}
+
+.descending {
+  display: inline;
+}
+
+.sort-menu select {
+  width: 100%;
+  height: fit-content;
+  margin: 10px 0;
+}
+
+.toggle {
+  margin: 10px 0;
+}
+
+.sort-menu button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 50px;
+}
