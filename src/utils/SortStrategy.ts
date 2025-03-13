@@ -33,15 +33,16 @@ export class NoSort extends SortStrategy {}
 
 export class Sorter {
   sortStrategy: SortStrategy;
-  descending: boolean = false;
+  descending: boolean;
 
   constructor(sortStrategy: SortStrategy) {
     this.sortStrategy = sortStrategy;
+    this.descending = false;
   }
 
-  toggleDescending() {
+  toggleDescending = () => {
     this.descending = !this.descending;
-  }
+  };
 
   sort(products: Product[]) {
     const sorted = this.sortStrategy.sort(products);

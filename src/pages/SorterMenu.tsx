@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Product } from "../data/Products";
 import "../styles/Sorter.css";
 import {
@@ -9,14 +10,25 @@ import {
 } from "../utils/SortStrategy";
 
 interface Props {
-  sorter: Sorter;
-  setSorter: React.Dispatch<React.SetStateAction<Sorter>>;
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 }
 
+const SorterEnum = [
+  new Sorter(new SortByName()),
+  new Sorter(new SortByPrice()),
+  new Sorter(new SortByStars()),
+  new Sorter(new SortByBoughtCount()),
+];
+
 const SorterMenu = (props: Props) => {
-  const { sorter, setSorter, products, setProducts } = props;
+  const { products, setProducts } = props;
+  const [sorter, setSorter] = useState<Sorter>(new Sorter(new SortByName()));
+
+  const handleSelectSort = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSorter(SorterEnum[Number.parseInt(event.target.value)]);
+    console.log(sorter);
+  };
 
   const sort = () => {
     setProducts(sorter.sort(products));
@@ -25,47 +37,14 @@ const SorterMenu = (props: Props) => {
   return (
     <div className="sort-menu">
       <div className="sort-by">Sort By:</div>
-      <select>
-        <option
-          onClick={() => {
-            setSorter(new Sorter(new SortByName()));
-            console.log(sorter);
-          }}
-        >
-          Product Name
-        </option>
-        <option
-          onClick={() => {
-            setSorter(new Sorter(new SortByPrice()));
-            console.log(sorter);
-          }}
-        >
-          Product Price
-        </option>
-        <option
-          onClick={() => {
-            setSorter(new Sorter(new SortByStars()));
-            console.log(sorter);
-          }}
-        >
-          Rating Stars
-        </option>
-        <option
-          onClick={() => {
-            setSorter(new Sorter(new SortByBoughtCount()));
-            console.log(sorter);
-          }}
-        >
-          Bought Count
-        </option>
+      <select onChange={handleSelectSort}>
+        <option value={0}>Product Name</option>
+        <option value={1}>Product Price</option>
+        <option value={2}>Rating Stars</option>
+        <option value={3}>Bought Count</option>
       </select>
       <div className="toggle">
-        <input
-          type="checkbox"
-          onClick={() => {
-            sorter.toggleDescending();
-          }}
-        />
+        <input type="checkbox" onClick={sorter.toggleDescending} />
         <div className="descending">Descending</div>
       </div>
       <button onClick={sort}>Sort</button>
