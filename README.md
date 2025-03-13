@@ -1,7 +1,5 @@
 # Strategy Pattern Demo
 
-===
-
 ## Project Info
 
 This project is based on the online amazon website:
