@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import formatCurrency from "../utils/Money";
 
-interface Rating {
+interface RatingDetails {
   stars: number;
   count: number;
 }
@@ -10,12 +10,34 @@ interface ProductDetails {
   id: string;
   image: string;
   name: string;
-  rating: Rating;
+  rating: RatingDetails;
   priceCents: number;
   keywords: string[];
   sizeChartLink?: string;
   instructionsLink?: string;
   warrantyLink?: string;
+}
+
+class Rating {
+  #stars: number;
+  #count: number;
+
+  constructor(rating: RatingDetails) {
+    this.#stars = rating.stars;
+    this.#count = rating.count;
+  }
+
+  getStars(): number {
+    return this.#stars;
+  }
+
+  getCount(): number {
+    return this.#count;
+  }
+
+  getStarsImage(): string {
+    return `images/ratings/rating-${this.#stars * 10}.png`;
+  }
 }
 
 export class Product {
@@ -30,51 +52,31 @@ export class Product {
     this.id = productDetails.id;
     this.image = productDetails.image;
     this.name = productDetails.name;
-    this.rating = productDetails.rating;
+    this.rating = new Rating(productDetails.rating);
     this.priceCents = productDetails.priceCents;
     this.keywords = productDetails.keywords;
   }
 
-  getStarsUrl() {
-    return `images/ratings/rating-${this.rating.stars * 10}.png`;
-  }
-
-  getPrice() {
+  getPrice(): string {
     return `$${formatCurrency(this.priceCents)}`;
   }
 
   getExtraInfo(): ReactNode {
     return <></>;
   }
-
-  static getProduct(
-    products: Product[],
-    productId: string
-  ): Product | undefined {
-    let matchingProduct;
-
-    products.forEach((product) => {
-      if (product.id === productId) {
-        matchingProduct = product;
-        return;
-      }
-    });
-
-    return matchingProduct;
-  }
 }
 
 class Clothing extends Product {
-  sizeChartLink;
+  #sizeChartLink;
 
   constructor(productDetails: ProductDetails) {
     super(productDetails);
-    this.sizeChartLink = productDetails.sizeChartLink;
+    this.#sizeChartLink = productDetails.sizeChartLink;
   }
 
   getExtraInfo(): ReactNode {
     return (
-      <a href={this.sizeChartLink} target="_blank">
+      <a href={this.#sizeChartLink} target="_blank">
         Size chart
       </a>
     );
@@ -82,23 +84,23 @@ class Clothing extends Product {
 }
 
 class Appliance extends Product {
-  instructionsLink;
-  warrantyLink;
+  #instructionsLink;
+  #warrantyLink;
 
   constructor(productDetails: ProductDetails) {
     super(productDetails);
-    this.instructionsLink = productDetails.instructionsLink;
-    this.warrantyLink = productDetails.warrantyLink;
+    this.#instructionsLink = productDetails.instructionsLink;
+    this.#warrantyLink = productDetails.warrantyLink;
   }
 
   getExtraInfo(): ReactNode {
     return (
       <div>
-        <a href={this.instructionsLink} target="_blank">
+        <a href={this.#instructionsLink} target="_blank">
           Instruction Manual
         </a>
         <br />
-        <a href={this.warrantyLink} target="_blank">
+        <a href={this.#warrantyLink} target="_blank">
           Warranty Info
         </a>
       </div>

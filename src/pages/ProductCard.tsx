@@ -1,4 +1,4 @@
-import { Product } from "../data/Products";
+import { Product } from "../business/Products";
 import "../styles/ProductCard.css";
 
 interface Props {
@@ -42,10 +42,10 @@ const ProductCard = (props: Props) => {
         <div className="product-rating-container">
           <img
             className="product-rating-stars"
-            src={"/" + product.getStarsUrl()}
+            src={"/" + product.rating.getStarsImage()}
           />
           <div className="product-rating-count link-primary">
-            {product.rating.count}
+            {product.rating.getCount()}
           </div>
         </div>
         <div className="product-price">{product.getPrice()}</div>

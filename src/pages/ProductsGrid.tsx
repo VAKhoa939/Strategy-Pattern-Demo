@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Product, fetchedProducts } from "../data/Products";
+import { Product, fetchedProducts } from "../business/Products";
 import ProductCard from "./ProductCard";
 import "../styles/ProductsGrid.css";
 import SorterMenu from "./SorterMenu";

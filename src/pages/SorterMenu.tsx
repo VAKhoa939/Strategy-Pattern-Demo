@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Product } from "../data/Products";
+import { useRef, useState } from "react";
+import { Product } from "../business/Products";
 import "../styles/Sorter.css";
 import {
   SortByName,
@@ -24,14 +24,18 @@ const SorterEnum = [
 const SorterMenu = (props: Props) => {
   const { products, setProducts } = props;
   const [sorter, setSorter] = useState<Sorter>(new Sorter(new SortByName()));
+  const descendingRef = useRef<boolean>(false);
 
   const handleSelectSort = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSorter(SorterEnum[Number.parseInt(event.target.value)]);
-    console.log(sorter);
+  };
+
+  const toggleDescending = () => {
+    descendingRef.current = !descendingRef.current;
   };
 
   const sort = () => {
-    setProducts(sorter.sort(products));
+    setProducts(sorter.sort(products, descendingRef.current));
   };
 
   return (
@@ -44,7 +48,7 @@ const SorterMenu = (props: Props) => {
         <option value={3}>Bought Count</option>
       </select>
       <div className="toggle">
-        <input type="checkbox" onClick={sorter.toggleDescending} />
+        <input type="checkbox" onClick={toggleDescending} />
         <div className="descending">Descending</div>
       </div>
       <button onClick={sort}>Sort</button>

@@ -1,9 +1,7 @@
-import { Product } from "../data/Products";
+import { Product } from "../business/Products";
 
-class SortStrategy {
-  sort(products: Product[]): Product[] {
-    return products;
-  }
+abstract class SortStrategy {
+  abstract sort(products: Product[]): Product[];
 }
 
 export class SortByName extends SortStrategy {
@@ -19,34 +17,30 @@ export class SortByPrice extends SortStrategy {
 
 export class SortByStars extends SortStrategy {
   sort(products: Product[]): Product[] {
-    return [...products].sort((a, b) => a.rating.stars - b.rating.stars);
+    return [...products].sort(
+      (a, b) => a.rating.getStars() - b.rating.getStars()
+    );
   }
 }
 
 export class SortByBoughtCount extends SortStrategy {
   sort(products: Product[]): Product[] {
-    return [...products].sort((a, b) => a.rating.count - b.rating.count);
+    return [...products].sort(
+      (a, b) => a.rating.getCount() - b.rating.getCount()
+    );
   }
 }
 
-export class NoSort extends SortStrategy {}
-
 export class Sorter {
-  sortStrategy: SortStrategy;
-  descending: boolean;
+  #sortStrategy: SortStrategy;
 
   constructor(sortStrategy: SortStrategy) {
-    this.sortStrategy = sortStrategy;
-    this.descending = false;
+    this.#sortStrategy = sortStrategy;
   }
 
-  toggleDescending = () => {
-    this.descending = !this.descending;
-  };
-
-  sort(products: Product[]) {
-    const sorted = this.sortStrategy.sort(products);
-    if (this.descending) sorted.reverse();
+  sort(products: Product[], isDescending: boolean) {
+    const sorted = this.#sortStrategy.sort(products);
+    if (isDescending) sorted.reverse();
     return sorted;
   }
 }
