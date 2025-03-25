@@ -5,6 +5,8 @@
 This project is based on the online amazon website:
 [Amazon Link](https://www.amazon.com/)
 
+Project scope: The catalog page with the sorting panel
+
 Authors: Team 9:
 
 - Nguyễn Khắc Huy - 21110773
@@ -32,7 +34,7 @@ The design pattern applied: Strategy Pattern
 git command:
 
 ```git
-git clone https://github.com/VAKhoa939/WMS-MERN.git
+git clone https://github.com/VAKhoa939/Strategy-Pattern-Demo.git
 ```
 
 ### Step 3
