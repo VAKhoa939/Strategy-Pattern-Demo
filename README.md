@@ -17,6 +17,12 @@ Authors: Team 9:
 
 The design pattern applied: Strategy Pattern
 
+Technology used:
+
+- IDE: Visual Studio Code
+- Language: TypeScript
+- Library/Framework: React
+
 ---
 
 ## Setup
